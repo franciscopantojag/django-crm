@@ -2,7 +2,12 @@
 {% block content %}
     {% if user.is_authenticated %}
         <div class="col-md-6 mx-auto">
-            <h1>Hello World</h1>
+            <h1>Records</h1>
+            {% if records %}
+                {% for record in records %}
+                    {{ record }} <br/>
+                {% endfor %}
+            {% endif %}
         </div>
     {% else %}
         <div class="mx-auto col-lg-4 col-md-8">
