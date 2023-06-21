@@ -39,10 +39,7 @@ def logout_user(request: 'HttpRequest'):
 def register_user(request: 'HttpRequest'):
     form = SignUpForm(request.POST or None)
 
-    if request.method == 'POST':
-        if not form.is_valid():
-            return render(request, 'register.html', {'form': form})
-
+    if request.method == 'POST' and form.is_valid():
         form.save()
         username = form.cleaned_data['username']
         password = form.cleaned_data['password1']
@@ -70,10 +67,7 @@ def add_record(request: 'HttpRequest'):
 
     form = AddRecordForm(request.POST or None)
 
-    if request.method == 'POST':
-        if not form.is_valid():
-            return render(request, 'add_record.html', {'form': form})
-
+    if request.method == 'POST' and form.is_valid():
         form.save()
         messages.success(request, 'You have successfully created a record!')
         return redirect('home')
@@ -89,10 +83,7 @@ def update_record(request: 'HttpRequest', record_id: 'int'):
     current_record = get_object_or_404(Record, id=record_id)
     form = AddRecordForm(request.POST or None, instance=current_record)
 
-    if request.method == 'POST':
-        if not form.is_valid():
-            return render(request, 'add_record.html', {'form': form})
-
+    if request.method == 'POST' and form.is_valid():
         form.save()
         messages.success(request, 'You have successfully updated a record!')
         return redirect('home')
@@ -105,7 +96,6 @@ def delete_record(request: 'HttpRequest', record_id: 'int'):
         messages.success(request, 'You must be logged in ...')
         return redirect('home')
 
-    current_record = get_object_or_404(Record, id=record_id)
-    current_record.delete()
+    get_object_or_404(Record, id=record_id).delete()
     messages.success(request, "Record Deleted Successfully...")
     return redirect('home')
