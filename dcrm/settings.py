@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -66,13 +67,12 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "dcrm",
-        "HOST": "localhost",
+        "HOST": os.environ.get('DB_HOST') or 'localhost',
         "PORT": "3306",
         "USER": "root",
         "PASSWORD": "test1234",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
